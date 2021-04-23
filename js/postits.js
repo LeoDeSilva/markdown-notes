@@ -23,6 +23,13 @@ function load_local(){
     return JSON.parse(localStorage.getItem("notes"))
 }
 
+function save_postits(){
+    localStorage.setItem("postits", postits.innerHTML)
+}
+
+function load_postits(){
+    return localStorage.getItem("postits")
+}
 
 //--------------------------MENUS---------------------------
 
@@ -100,9 +107,7 @@ function add_postit(){
 
 }
 
-function save_postits(){
-    localStorage.setItem("postits", postits.innerHTML)
-}
+
 
 DARK_MODE = localStorage.getItem("dark-mode")
 if (DARK_MODE != "true"){
@@ -116,7 +121,12 @@ dropdown.classList.add("hide")
 handle_click()
 
 let DRAGS = ""
-add_postit()
+
+if (load_postits() == null){
+    add_postit()
+}else{
+    postits.innerHTML = load_postits()
+}
 
 notes = postits.childNodes
 for (let i = 0; i < notes.length; i++){
@@ -124,4 +134,6 @@ for (let i = 0; i < notes.length; i++){
         e.target.remove()
         console.log("REMO")
     })
-}
+}
+
+setInterval(save_postits, 100)
