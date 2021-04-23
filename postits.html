@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang = "en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="veiwport" content="width=device-width, intitial-scale=1.0">
+        <link rel="stylesheet" href="css/styles.css">
+        <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <title></title>
+    </head>  
+
+    <body>
+
+        <div id="dropdown" class="hide">
+            <div>Folders</div>
+            <div onclick="open_notes()">Notes</div>
+            <div onclick="toggle_dark()">Toggle Color Mode</div>
+            <div>Login</div>
+            <div>Sign Up</div>
+        </div>
+
+
+        <div class="heading">
+            <button class="menu-btn">
+                <!--<i class="bx bx-menu"></i>-->
+                <i onclick="add_postit()" class='bx bx-plus'></i>
+            </button>
+
+            <div>Notes</div>
+
+            <div id="profile" class="profile-container">                
+                <img onclick="open_dropdown_menu()" src="img/us.webp" class="profile-icon"></img>
+            </div>
+        </div>
+
+        <div id="notes" class="notes-container">
+        </div>
+        
+        
+        
+    </body>
+    <script src="https://unpkg.com/marked@0.3.6"></script>
+    <script src="https://unpkg.com/showdown/dist/showdown.min.js"></script>
+    <script src="js/text_functions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="js/postits.js"></script>
+</html>
