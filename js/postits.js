@@ -11,6 +11,7 @@ showdown.setOption('smoothLivePreview', 'true');
 showdown.setOption('simpleLineBreaks', 'true');
 showdown.setOption('omitExtraWLInCodeBlocks', 'true');
 
+let z_index = findHighestZIndex("div") 
 
 
 //--------------------------LOCAL STORAGE---------------------------
@@ -100,11 +101,34 @@ function add_postit(){
     });
     notes = postits.childNodes
     for (let i = 0; i < notes.length; i++){
+        notes[i].addEventListener("click", function(e) {
+            e.target.style.zIndex = z_index
+            z_index += 1;
+            console.log(z_index)
+        })
         notes[i].addEventListener("dblclick", function(e) {
             e.target.remove()
         })
     }
 
+}
+
+function findHighestZIndex(elem)
+{
+  var elems = document.getElementsByTagName(elem);
+  var highest = Number.MIN_SAFE_INTEGER || -(Math.pow(2, 53) - 1);
+  for (var i = 0; i < elems.length; i++)
+  {
+    var zindex = Number.parseInt(
+      document.defaultView.getComputedStyle(elems[i], null).getPropertyValue("z-index"),
+      10
+    );
+    if (zindex > highest)
+    {
+      highest = zindex;
+    }
+  }
+  return highest;
 }
 
 
@@ -132,8 +156,14 @@ notes = postits.childNodes
 for (let i = 0; i < notes.length; i++){
     notes[i].addEventListener("dblclick", function(e) {
         e.target.remove()
-        console.log("REMO")
+    })
+    notes[i].addEventListener("click", function(e) {
+        e.target.style.zIndex = z_index
+        z_index += 1;
     })
 }
-
+ $(".postit").each(function() {
+        $(this).draggable()
+    });
 setInterval(save_postits, 100)
+
