@@ -20,22 +20,6 @@ showdown.setOption('smoothLivePreview', 'true');
 showdown.setOption('simpleLineBreaks', 'true');
 showdown.setOption('omitExtraWLInCodeBlocks', 'true');
 
-if (load_local() == null){ NOTES = [] }
-else{ NOTES = load_local() }
-
-if (localStorage.getItem("index") == null){ INDEX = 0 }
-else{ INDEX = localStorage.getItem("index") }
-
-if (NOTES.length <= 0){
-    add_note()
-    console.log("ADD")
-    INDEX = 0
-}
-
-update_notes()
-get_note(INDEX)
-
-
 
 //--------------------------LOCAL STORAGE---------------------------
 function save_local(){
@@ -76,6 +60,18 @@ function open_postits(){
     window.location = "postits.html"
 }
 
+function toggle_dark(){
+    open_dropdown_menu()
+    let theme = document.documentElement.getAttribute("data-theme");
+    if (theme != "dark"){
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("dark-mode", false)
+        return;
+    }
+    document.documentElement.setAttribute("data-theme", "light");
+    localStorage.setItem("dark-mode", true)
+}
+
 function handle_click(){
     $(window).click(function() {
         console.log("cloc")
@@ -98,25 +94,10 @@ function handle_click(){
     });
 }
 
-function toggle_dark(){
-    open_dropdown_menu()
-    let theme = document.documentElement.getAttribute("data-theme");
-    if (theme != "dark"){
-        document.documentElement.setAttribute("data-theme", "dark");
-        localStorage.setItem("dark-mode", false)
-        return;
-    }
-    document.documentElement.setAttribute("data-theme", "light");
-    localStorage.setItem("dark-mode", true)
-}
-
-
-
 //--------------------------NOTES---------------------------
 
 function find_title(){
     let nodes 
-
     let MARKDOWN = toolbar.classList.contains("show-flex")
     if (MARKDOWN == true){
         nodes = compiled.childNodes;
@@ -252,6 +233,22 @@ function set_markdown(){
 }
 
 
+//-------------------------LOGIC------------------------
+
+if (load_local() == null){ NOTES = [] }
+else{ NOTES = load_local() }
+
+if (localStorage.getItem("index") == null){ INDEX = 0 }
+else{ INDEX = localStorage.getItem("index") }
+
+if (NOTES.length <= 0){
+    add_note()
+    console.log("ADD")
+    INDEX = 0
+}
+
+update_notes()
+get_note(INDEX)
 
 
 DARK_MODE = localStorage.getItem("dark-mode")
@@ -259,19 +256,10 @@ if (DARK_MODE != "true"){
     toggle_dark()
 }
 
-dropdown.classList.remove("show");
-dropdown.classList.add("hide")
-
+toggle_class(dropdown, "show", "hide")
 set_markdown()
 
-text.addEventListener("input", function () {
-    set_markdown()
-})
-
-setInterval(function () {
-    save_note(INDEX)
-}, 100)
+text.addEventListener("input", function () { set_markdown() })
+setInterval(function () { save_note(INDEX) }, 100)
 handle_click()
-
-
 
